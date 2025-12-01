@@ -7,12 +7,10 @@ public class Store {
     private final List<Integer> list = new ArrayList<>();
 
     private final int capacity ;
-    private final int threshold;
 
     public Store(int capacity) {
         if (capacity <= 0) throw new IllegalArgumentException("Capacity must be greater than zero.");
         this.capacity = capacity;
-        this.threshold = capacity / 2;
     }
 
     public synchronized void produce(int value) throws InterruptedException {
@@ -27,7 +25,7 @@ public class Store {
     }
 
     public synchronized int consume() throws InterruptedException {
-        while (list.size() <= threshold) {
+        while (list.size() <= capacity) {
             System.out.println(Thread.currentThread().getName() + " Мало элементов, ждём добавления");
             wait();
         }
